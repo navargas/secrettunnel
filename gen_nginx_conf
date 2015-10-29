@@ -1,0 +1,15 @@
+NAME=$1
+PROTOCOL=$2
+IP=$3
+PORT=$4
+if [ -z $NAME ] || [ -z $PROTOCOL ] || [ -z $IP ] || [ -z $PORT ]; then
+  echo There was an error, variable undefined >/dev/stderr
+  exit 1;
+fi
+echo 'server {'
+echo "    listen       $PORT;"
+echo "    server_name  $NAME;"
+echo '    location / {'
+echo "        proxy_pass   $PROTOCOL://$IP:$PORT;"
+echo '    }'
+echo '}'

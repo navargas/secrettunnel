@@ -1,0 +1,16 @@
+tunnel:
+  image: navargas/secrettunnel
+  ports:
+    - "18210:80"
+  extra_hosts:
+    - "peer:129.41.157.17"
+  environment:
+    - expose=gamma:80 delta:80
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+gamma:
+  image: navargas/hostecho
+  links:
+    - tunnel:alpha
+delta:
+  image: navargas/hostecho

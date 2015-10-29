@@ -1,0 +1,38 @@
+
+IMAGE=navargas/secrettunnel
+
+status() {
+  printf "\033[s\033[1A\033[100D$1\033[u"
+}
+
+bgproc='yes'
+output=/dev/null
+if [[ "$1" == more ]]; then
+  output=/dev/stdout
+  bgproc=''
+fi
+
+run () {
+  docker build -t $IMAGE . &>$output
+  res=$?
+  if [ $res -eq 0 ]; then
+    #printf '\033[s\033[1A\033[100DBUILD DONE\033[u'
+    status "BUILD DONE"
+    docker push $IMAGE &>$output
+    res=$?
+  fi
+
+  if [ $res -ne 0 ]; then
+    #printf '\033[s\033[1A\033[100DISSUE\033[u'
+    status "ISSUE     "
+  else
+    #printf '\033[s\033[1A\033[100DALL DONE\033[u'
+    status "ALL DONE  "
+  fi  
+}
+
+if [ -z $bgproc ]; then
+  run
+else
+  run &
+fi
