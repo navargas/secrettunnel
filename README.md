@@ -46,7 +46,7 @@ delta:
   image: navargas/hostecho
 ```
 
-Then, from ```gamma``` for example, you can use the hostname ```alpha``` to connect to container alpha on server 1.
+Then, from ```alpha``` for example, you can use the hostname ```gamma``` to connect to container ```gamma``` on server 2, or hostname ```delta``` to connect to container ```delta```.
 
 # Goals
 * Simple interface that preserves the elegance of docker compose
