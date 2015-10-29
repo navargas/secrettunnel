@@ -1,6 +1,5 @@
 #!/bin/bash
 
-config="alpha:80 beta:80"
 compose=$(docker inspect --format '{{.Config.Labels}}' $(hostname) | grep -o -E 'com.docker.compose.project:[^ ]+' | awk -F: '{print $2}')
 defaultInstance=""
 
