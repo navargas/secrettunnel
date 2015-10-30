@@ -1,0 +1,14 @@
+#!/bin/bash
+
+name=$1
+port=$2
+ip=$3
+echo $name $port $ip
+gen_nginx_conf $name http $ip $port > /etc/nginx/conf.d/${name}.conf
+
+if [ $(ps -ef | grep -c nginx) > 1 ] && [ "$4" != NORELOAD ]; then
+  # if nginx is running, relaod the configuration
+  nginx -s reload && echo nginx reloaded
+fi
+
+echo Setup Done

@@ -9,11 +9,11 @@ if [ $compose != "" ]; then
 fi
 
 for i in $expose; do
-  name=$(echo $i | awk -F: '{print $1}')
+  name=${compose}$(echo $i | awk -F: '{print $1}')${defaultInstance}
   port=$(echo $i | awk -F: '{print $2}')
   ip=$(docker inspect --format '{{.NetworkSettings.IPAddress}}' ${compose}${name}${defaultInstance})
-  echo $name $port $ip
-  gen_nginx_conf $name http $ip $port > /etc/nginx/conf.d/${name}.conf
+  # make configuration file, but do not reload nginx until all files are created
+  reset_connection "$name" "$port" "$ip" NORELOAD
 done
 
 if [ $(ps -ef | grep -c nginx) > 1 ]; then
