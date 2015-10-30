@@ -11,6 +11,7 @@ if [[ "$1" == more ]]; then
   output=/dev/stdout
   bgproc=''
 fi
+nopush="$2"
 
 run () {
   docker build -t $IMAGE . &>$output
@@ -18,7 +19,7 @@ run () {
   if [ $res -eq 0 ]; then
     #printf '\033[s\033[1A\033[100DBUILD DONE\033[u'
     status "BUILD DONE"
-    docker push $IMAGE &>$output
+    [ -z "$nopush" ] && docker push $IMAGE &>$output
     res=$?
   fi
 
