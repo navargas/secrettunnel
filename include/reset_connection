@@ -1,14 +1,19 @@
 #!/bin/bash
-
+sleep 1
 name=$1
 port=$2
-ip=$3
-echo $name $port $ip
-gen_nginx_conf $name http $ip $port > /etc/nginx/conf.d/${name}.conf
+alias=$3
+ip=$(docker inspect --format '{{.NetworkSettings.IPAddress}}' $name)
+logfile=/var/log/secrettunnel
+echo Attempting connection to \($name, $port, $ip\) >> $logfile
+if [ -z "$name" ] || [ -z "$port" ] || [ -z "$ip" ]; then
+  echo There was an issue \($name, $port, $ip\) >> $logfile
+  exit 1
+fi
+gen_nginx_conf "$alias" http $ip $port > /etc/nginx/conf.d/${name}.conf
+cat /etc/nginx/conf.d/${name}.conf >> $logfile
 
 if [ $(ps -ef | grep -c nginx) > 1 ] && [ "$4" != NORELOAD ]; then
   # if nginx is running, relaod the configuration
-  nginx -s reload && echo nginx reloaded
+  nginx -s reload &>> $logfile
 fi
-
-echo Setup Done

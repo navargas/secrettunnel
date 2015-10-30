@@ -5,4 +5,4 @@ ADD ./include/gen_nginx_conf /usr/bin/gen_nginx_conf
 ADD ./include/default.conf /etc/nginx/conf.d/default.conf
 ADD ./include/setup.sh /usr/bin/
 ADD ./include/reset_connection /usr/bin/
-CMD ["sh", "-c", "setup.sh && nginx -g \"daemon off;\""]
+CMD ["sh", "-c", "setup.sh && nginx && tail -F /var/log/secrettunnel"]
