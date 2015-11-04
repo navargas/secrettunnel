@@ -58,6 +58,8 @@ be moved to a different host without modification for other containers
 Note: This functionality will eventually (hopefully) be replaced with a
 solution from the docker/libnetwork
 
+**Update:** Huzzah! http://blog.docker.com/2015/11/docker-1-9-production-ready-swarm-multi-host-networking/
+
 *TCP in future? Maybe!*
 
 *Through the mountain!*
