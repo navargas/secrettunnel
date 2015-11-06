@@ -1,4 +1,7 @@
 # Secret Tunnel
+
+*[Deprecated - This functionality is replaced with Docker 1.9 networks]*
+
 *HTTP Tunnel for docker images on multiple hosts.*
 
 I am a big fan of how intuitive it is to link containers with docker
